@@ -10,7 +10,7 @@ struct Vertex
 }
 ```
 
-In einer auf einem dem Fusee-Tutorial 03 () basierenden Beispiel erzeugen Sie die Klasse „Geometry“, die folgende Methoden enthält:
+In einer auf einem dem [Fusee-Tutorial 03] (https://github.com/griestopf/Fusee.Tutorial/tree/master/Tutorial03) basierenden Beispiel erzeugen Sie die Klasse „Geometry“, die folgende Methoden enthält:
 
 ```C#
 public class Geometry
