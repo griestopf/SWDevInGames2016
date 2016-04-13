@@ -13,7 +13,7 @@ struct Vertex
 In einer auf einem dem [Fusee-Tutorial 03] (https://github.com/griestopf/Fusee.Tutorial/tree/master/Tutorial03) basierenden Beispiel erzeugen Sie die Klasse „Geometry“, die folgende Methoden enthält:
 
 ```C#
-public class Geometry
+public class MeshBuilder
 {
     void AddConvexPoly(Vertex[] vertices);
     void AddTri(Vertex a, Vertex b, Vertex c);
@@ -31,4 +31,4 @@ Erzeugen Sie eine Lösung, die prinzipiell mit beliebig vielen Polygonen und Eck
 Standard-C#-Containerklassen oder selbst implementierte Containerklassen, die auf Generics basieren. Welche Containerklasse ist geeignet, um die Frage „Ist der 
 Eckpunkt [(x, y, z), (xn, yn, zn)] schon enthalten?“ beantworten zu können.
 
-Implementieren Sie mit Hilfe von Geometry Routinen, die Quader, Kugel, Zylinder, Kegel, Röhre, Torus, etc. erzeugen können und dabei ein sinnvolle Parametrisierung (wie z.B. polygonale Aufteilung, Segmentierung u.ä. erlauben – siehe CINEMA 4D). 
+Implementieren Sie mit Hilfe von MeshBuilder Routinen, die Quader, Kugel, Zylinder, Kegel, Röhre, Torus, etc. erzeugen können und dabei ein sinnvolle Parametrisierung (wie z.B. polygonale Aufteilung, Segmentierung u.ä. erlauben – siehe CINEMA 4D). 
