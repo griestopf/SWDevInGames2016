@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Fusee.Base.Common;
 using Fusee.Base.Core;
 using Fusee.Engine.Common;
@@ -67,11 +68,6 @@ namespace Fusee.Tutorial.Core
         // Init is called on startup. 
         public override void Init()
         {
-            // Initialize the shader(s)
-            var shader = RC.CreateShader(_vertexShader, _pixelShader);
-            RC.SetShader(shader);
-            _albedoParam = RC.GetShaderParam(shader, "albedo");
-
             // Load some meshes
             Mesh cone = LoadMesh("Cone.fus");
             Mesh cube = LoadMesh("Cube.fus");
@@ -79,6 +75,21 @@ namespace Fusee.Tutorial.Core
             Mesh pyramid = LoadMesh("Pyramid.fus");
             Mesh sphere = LoadMesh("Sphere.fus");
 
+
+            SceneItem si1 = new Transform {Pos = new float3(1, 2, 3)};
+            SceneItem si2 = new Geometry {Mesh = cylinder };
+
+            si1.Render(RC);
+
+
+
+
+            // Initialize the shader(s)
+            var shader = RC.CreateShader(_vertexShader, _pixelShader);
+            RC.SetShader(shader);
+            _albedoParam = RC.GetShaderParam(shader, "albedo");
+
+ 
             // Setup a list of objects
             _root = new SceneOb { 
                 Children = new List<SceneOb>(new []
