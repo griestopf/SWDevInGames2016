@@ -26,7 +26,7 @@ zur Verfügung stehen. Erweitern Sie daher Ihren Catalog um einen `DirectoryCata
 ##Aufgabe 2
 
 Vergleichen Sie die im Unterricht erarbeitete Lösung zum Calculator-Beispiel mit der im oben angegebenen 
-Link zum Orgiginal. Wo sind die Unterschiede? Die im Microsoft-Beispiel verwendete Lösung benutzt das im MEF (Managed
+Link zum Original. Wo sind die Unterschiede? Die im Microsoft-Beispiel verwendete Lösung benutzt das im MEF (Managed
 Extensibility Framework) definierte Generic `Lazy<T, TMetadata>`. Dieses ist von der allgemeineren Klasse 
 `Lazy<T>` abgeleitet. Welchen Nutzen hat die Klasse `Lazy<T>`? Warum ist dieser Nutzen für die Verwendung im
 MEF von Vorteil? 
