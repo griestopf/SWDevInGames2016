@@ -10,9 +10,10 @@ namespace Fusee.Tutorial.Core
 
     public class SceneItem
     {
-        public virtual void Accept(Visitor visitor)
-        {
-        }
+        //public virtual void Accept(Visitor visitor)
+        //{
+        //    // visitor.Visit(this);
+        //}
     }
 
     public class Material : SceneItem
@@ -20,10 +21,10 @@ namespace Fusee.Tutorial.Core
         public float3 Albedo;
         public IShaderParam AlbedoParam;
 
-        public override void Accept(Visitor visitor)
-        {
-            visitor.Visit(this);
-        }
+        //public override void Accept(Visitor visitor)
+        //{
+        //    visitor.Visit(this);
+        //}
     }
 
     public class Transform : SceneItem
@@ -32,30 +33,30 @@ namespace Fusee.Tutorial.Core
         public float3 Rot = float3.Zero;
         public float3 Scale = float3.One;
 
-        public override void Accept(Visitor visitor)
-        {
-            visitor.Visit(this);
-        }
+        //public override void Accept(Visitor visitor)
+        //{
+        //    visitor.Visit(this);
+        //}
     }
 
     public class Group : SceneItem
     {
         public List<SceneItem> Children;
 
-        public override void Accept(Visitor visitor)
-        {
-            visitor.Visit(this);
-        }
+        //public override void Accept(Visitor visitor)
+        //{
+        //    visitor.Visit(this);
+        //}
     }
 
     public class Geometry : SceneItem
     {
         public Mesh Mesh;
 
-        public override void Accept(Visitor visitor)
-        {
-            visitor.Visit(this);
-        }
+        //public override void Accept(Visitor visitor)
+        //{
+        //    visitor.Visit(this);
+        //}
     }
 
 
@@ -64,9 +65,49 @@ namespace Fusee.Tutorial.Core
         public void TraverseChildren(Group group)
         {
             foreach (var child in group.Children)
-                child.Accept(this);
+            {
+                Group g = child as Group;
+                if (g != null)
+                {
+                    Visit(g);
+                    continue;
+                }
+
+                Material m = child as Material;
+                if (m != null)
+                {
+                    Visit(m);
+                    continue;
+                }
+
+                Transform t = child as Transform;
+                if (t != null)
+                {
+                    Visit(t);
+                    continue;
+                }
+
+                Geometry ge = child as Geometry;
+                if (ge != null)
+                {
+                    Visit(ge);
+                    continue;
+                }
+
+
+                //if (child is Group)
+                //    Visit((Group) child);
+                //else if (child is Material)
+                //    Visit((Material) child);
+                //else if (child is Transform)
+                //    Visit((Transform) child);
+                //else if (child is Geometry)
+                //    Visit((Geometry) child);
+                // child.Accept(this);
+            }
         }
 
+       
         public virtual void Visit(Group group)
         {
 
@@ -86,12 +127,13 @@ namespace Fusee.Tutorial.Core
         {
 
         }
-
+        
     }
 
     public class RenderVisitor : Visitor
     {
         public RenderContext rc;
+        // [Visitor]
         public override void Visit(Group group)
         {
             float4x4 mvOld = rc.ModelView;

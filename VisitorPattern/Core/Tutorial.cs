@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Fusee.Base.Common;
 using Fusee.Base.Core;
@@ -50,7 +52,7 @@ namespace Fusee.Tutorial.Core
         private float _alpha = 0.001f;
         private float _beta;
 
-        private SceneItem _root;
+        private Group _root;
 
 
         public static Mesh LoadMesh(string assetName)
@@ -81,7 +83,39 @@ namespace Fusee.Tutorial.Core
             RC.SetShader(shader);
             _albedoParam = RC.GetShaderParam(shader, "albedo");
 
- 
+
+            object o1 = new Group
+            {
+                Children = new List<SceneItem>(new SceneItem[]
+                        {
+                            new Transform {Pos = new float3(0, 2.75f, 0), Scale = new float3(0.5f, 1, 0.25f)},
+                            new Geometry {Mesh = cube}
+                        })
+            };
+            object o2 = new Transform { Pos = new float3(0, 2.75f, 0), Scale = new float3(0.5f, 1, 0.25f) };
+            object o3 = new float3(22, 33, 44);
+
+
+            /*
+            InspectType(o1.GetType());
+            InspectType(o2.GetType());
+            InspectType(o3.GetType());
+
+            CheckObject(o1);
+            CheckObject(o2);
+            CheckObject(o3);
+           
+            ///
+            Assembly asm = Assembly.Load("Fusee.Math.Core");
+            Type[] types = asm.GetTypes();
+            foreach (var type in types)
+            {
+                InspectType(type);
+            }
+            /// */
+
+
+
             // Setup a list of objects
             _root = new Group()
             {
@@ -123,6 +157,34 @@ namespace Fusee.Tutorial.Core
             RC.ClearColor = new float4(1, 1, 1, 1);
         }
 
+        private void CheckObject(object o3, Type t)
+        {
+            if (t.IsInstanceOfType(o3) )
+                Diagnostics.Log("Hoooray a float3");
+            else
+                Diagnostics.Log("something else");
+        }
+
+        private void InspectType(Type t)
+        {
+            // Type t = o.GetType();
+            Diagnostics.Log("Got Type: " + t.Name);
+
+            Diagnostics.Log("List of Fields:");
+            FieldInfo[] fields = t.GetFields();
+            foreach (var field in fields)
+            {
+                Diagnostics.Log(field.Name);
+            }
+
+            Diagnostics.Log("List of Methods:");
+            MethodInfo[] methods = t.GetMethods();
+            foreach (var method in methods)
+            {
+                Diagnostics.Log(method.Name);
+            }
+        }
+
         static float4x4 ModelXForm(float3 pos, float3 rot, float3 pivot)
         {
             return float4x4.CreateTranslation(pos + pivot)
@@ -153,7 +215,8 @@ namespace Fusee.Tutorial.Core
             RC.ModelView = view;
 
             // TODO: Render the Root!!
-
+            new RenderVisitor { rc = RC }.TraverseChildren(_root);
+            // _root.Accept(new RenderVisitor {rc = RC});
             
             // Swap buffers: Show the contents of the backbuffer (containing the currently rendered frame) on the front buffer.
             Present();
