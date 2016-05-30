@@ -32,5 +32,16 @@ Extensibility Framework) definierte Generic `Lazy<T, TMetadata>`. Dieses ist von
 MEF von Vorteil? 
 
 ##Aufgabe 3
+
 An welchen Stellen könnte die Verwendung eines DI-Container wie MEF in einer Game-Engine (z.B. FUSEE, Unity 3D) oder einem
 Game sinnvoll sein?
+
+##Aufgabe 4
+
+Lesen Sie den Artikel von Martin Fowler, dem „Erfinder von Dependency Injection“:
+http://martinfowler.com/articles/injection.html.
+
+Lesen Sie die einleitenden Artikel über das Unity-Dependency-Injection-Framework
+http://msdn.microsoft.com/en-us/library/dn170416.aspx.
+
+
