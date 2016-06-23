@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Reflection;
 
 // 22+48
 
@@ -35,6 +36,17 @@ namespace Calculator0
         }
     }
 
+    public class MeineSuperDuperKlasseAttribute : Attribute
+    {
+        public string Hilfetext;
+        public MeineSuperDuperKlasseAttribute(string hilfetext)
+        {
+            Hilfetext = hilfetext;
+        }
+    }
+
+
+    [MeineSuperDuperKlasse("So eine schöne Klasse!")]
     [Export(typeof(IOperation))]
     public class Mult : IOperation
     {
@@ -112,6 +124,20 @@ namespace Calculator0
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
             CompositionContainer container = new CompositionContainer(catalog);
             container.ComposeParts(calc);
+
+            foreach (IOperation op in calc.operations)
+            {
+                Type t = op.GetType();
+                foreach (var ca in t.GetCustomAttributes())
+                {
+                    MeineSuperDuperKlasseAttribute msdka = ca as MeineSuperDuperKlasseAttribute;
+                    if (msdka != null)
+                    {
+                        Console.WriteLine(t.Name + " ist SuperDuper: " + msdka.Hilfetext);
+                    }
+                }
+            }
+
 
             String s;
             Console.WriteLine("Enter Command:");
